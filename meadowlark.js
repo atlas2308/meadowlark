@@ -9,7 +9,8 @@ var handlebars = require('express-handlebars')
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.NODE_PORT || 3000);
+app.set('ip', process.env.NODE_IP || 'localhost');
 
 app.use(express.static(__dirname + '/public'));
 
@@ -44,7 +45,7 @@ app.use(function(err, req, res, next){
 	res.render('500');
 });
 
-app.listen(app.get('port'), function(){
-  console.log( 'Express started on http://localhost:' +
+app.listen(app.get('port'), app.get('ip'), function(){
+  console.log( 'Express started on http://' + app.get('ip') + ':' +
     app.get('port') + '; press Ctrl-C to terminate.' );
 });
